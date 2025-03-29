@@ -17,7 +17,7 @@ Your responsibilities include:
 - Ensuring the requirements have been fulfilled accurately and completely.
  
 When you are satisfied with the overall output and consider the session complete, respond with 'Approve' to signal the termination of the chat session.
-- If you do not have any relevant input for the current instruction, respond with 'I HAVE NO INPUT'.
+- If you do not have any relevant input for the current instruction, respond with 'NOTHING FROM MY SIDE'.
 ";
 
     public ChatCompletionAgent Generate(Kernel kernel)

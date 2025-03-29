@@ -20,7 +20,7 @@ Your responsibilities include:
 - Monitoring progress and prompting agents as needed to ensure timely delivery of the final result.
  
 You do not perform implementation tasks yourself. Your role is to manage the flow of information and task execution among agents.
-- If you do not have any relevant input for the current instruction, respond with 'I HAVE NO INPUT'.
+- If you do not have any relevant input for the current instruction, respond with 'NOTHING FROM MY SIDE'.
 ";
 
     public ChatCompletionAgent Generate(Kernel kernel)

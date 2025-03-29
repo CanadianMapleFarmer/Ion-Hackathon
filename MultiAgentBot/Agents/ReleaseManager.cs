@@ -28,7 +28,9 @@ Ensure that:
 - The artifact is accessible and properly stored in the specified destination.
  
 Only proceed with deployment once all prior agents have completed their tasks successfully.
-- If you do not have any relevant input for the current instruction, respond with 'I HAVE NO INPUT'.
+- If you do not have any relevant input for the current instruction, respond with 'NOTHING FROM MY SIDE'.
+
+\Documents\AskIan is the directory where you should store your deployment artifacts.
 ";
 
     public ChatCompletionAgent Generate(Kernel kernel)

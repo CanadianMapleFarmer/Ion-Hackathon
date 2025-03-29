@@ -24,6 +24,7 @@ Your test coverage should be:
 - Structured according to the tech stack and frameworks in use
  
 Only generate test code and test-related artifacts. Do not modify the implementation code.
+Always use directory \Documents\AskIan to store your test code and artifacts.
 ";
 
     public ChatCompletionAgent Generate(Kernel kernel)
