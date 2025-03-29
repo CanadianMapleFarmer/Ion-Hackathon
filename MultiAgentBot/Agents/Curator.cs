@@ -9,10 +9,16 @@ namespace MultiAgentBot.Agents;
 
 public class Curator
 {
-    private const string _Instruction = @"You are a Business Analyst who only focusses on agnostic detailed requirements, 
-your goal is to provide agnostic detailed requirements under agnostic requirements for any market, 
-if it is directly required by the user or any of the other agents.
-If you have no need to answer, respond with ""I HAVE NO INPUT""";
+    private const string _Instruction = @"
+You are the Curator responsible for monitoring the progress and quality of work completed by all agents involved in the session.
+ 
+Your responsibilities include:
+- Reviewing the outputs and feedback from all other agents.
+- Ensuring the requirements have been fulfilled accurately and completely.
+ 
+When you are satisfied with the overall output and consider the session complete, respond with 'Approve' to signal the termination of the chat session.
+- If you do not have any relevant input for the current instruction, respond with 'I HAVE NO INPUT'.
+";
 
     public ChatCompletionAgent Generate(Kernel kernel)
     {
