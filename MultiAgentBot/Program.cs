@@ -77,9 +77,8 @@ your goal is to provide agnostic detailed requirements under agnostic requiremen
 if it is directly required by the user or any of the other agents.
 If you have no need to answer, respond with ""I HAVE NO INPUT""";
 
-    string uiDeveloper = @"You are a Business Analyst who only focusses on high-level requirements for a market, 
-your goal is to provide high-level requirements specific market, if it is directly required by the user or any of the other agents.
-If you have no need to answer, respond with ""I HAVE NO INPUT""";
+    string uiDeveloper = @"You are a UI developer who only focuses on generating code from given business requirements,
+that are supplied by the Business Analyst, and integrate with the backend developer. If you have no need to answer, respond with ""I HAVE NO INPUT""";
 
     string backendDeveloper = @"You are a Business Analyst who only focusses on detailed requirements for a market, 
 your goal is to provide detailed requirements under requirements for a specific market, 
@@ -89,8 +88,7 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
     string releaseManager = @"You are an expert on regulations for online gambling and casinos. 
 Your goal is to provide details around regulations for a given market, if it is directly required by the user or any of the other agents.
 If you have no need to answer, respond with ""I HAVE NO INPUT""";
-
-
+    
     string curatorAgent = @"XYZ";
 
     ChatCompletionAgent ProjectManagerAgent = new()
