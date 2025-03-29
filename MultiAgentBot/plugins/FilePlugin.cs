@@ -21,6 +21,8 @@ public class FilePlugin
         try
         {
             EnsureDirectoryExists(filePath);
+            // Clear the file by writing an empty string first (overwrite)
+            File.WriteAllText(filePath, string.Empty);
             File.AppendAllText(filePath, content);
             Console.WriteLine($"Content written successfully to: {filePath}");
         }
