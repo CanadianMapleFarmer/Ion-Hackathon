@@ -28,6 +28,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddLogging(lb => lb.AddConsole().SetMinimumLevel(LogLevel.Trace));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddSingleton(sp =>
 {
     var handler = new HttpClientHandler();
@@ -75,13 +85,15 @@ builder.Services.AddScoped(sp =>
     var architectAgent = new Ian_ARCH().Generate(kernel);
     var curatorAgent = new Curator().Generate(kernel);
     var releaseManagerAgent = new ReleaseManager().Generate(kernel);
+    var testAgent = new Juandre_Test().Generate(kernel);
 
     AgentGroupChat chat = new(
         projectManagerAgent,
         businessAnalystAgent,
         architectAgent,
         developerAgent,
-        releaseManagerAgent
+        releaseManagerAgent,
+        testAgent
         )
     {
         ExecutionSettings = new()
@@ -109,6 +121,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors("AllowAll");
 
 app.MapControllers();
 
