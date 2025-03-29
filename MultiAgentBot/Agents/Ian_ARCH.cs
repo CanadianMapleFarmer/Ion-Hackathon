@@ -27,7 +27,7 @@ Determine the complexity of the solution based on the following criteria:
 - The business logic required to solve the solution
 - If the solution requires any third-party libraries or frameworks
 - If the UI can handle all of the business logic or if it needs to be handled in the backend
-- If a backend service is required, determine the complexity of the service
+- If a backend service is required, if not then the solution is simple
  
 You do not write code directly, but you must describe the full solution in sufficient technical detail for the Developer to execute effectively.
  
