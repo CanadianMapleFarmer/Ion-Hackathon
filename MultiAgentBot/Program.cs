@@ -91,13 +91,13 @@ Your goal is to provide details around regulations for a given market, if it is 
 If you have no need to answer, respond with ""I HAVE NO INPUT""";
 
 
+    string curatorAgent = @"XYZ";
 
-
-    ChatCompletionAgent projectManagerAgent = new()
+    ChatCompletionAgent ProjectManagerAgent = new()
     {
         Instructions = projectManager,
         Kernel = marketAgentKernel,
-        Name = "MarketAgent",
+        Name = "Herman",
         Arguments = new KernelArguments(
                 new OpenAIPromptExecutionSettings()
                 {
@@ -106,11 +106,11 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
     };
 
 
-    ChatCompletionAgent businessAnalystAgent = new()
+    ChatCompletionAgent BusinessAnalystAgent = new()
     {
         Instructions = businessAnalyst,
         Kernel = kernel,
-        Name = "AgnosticRequirementAgent",
+        Name = "Mason",
         Arguments = new KernelArguments(
                 new OpenAIPromptExecutionSettings()
                 {
@@ -122,7 +122,7 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
     {
         Instructions = architect,
         Kernel = kernel,
-        Name = "SoftwareEngineerAgent",
+        Name = "Ian",
         Arguments = new KernelArguments(
                 new OpenAIPromptExecutionSettings()
                 {
@@ -134,7 +134,7 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
     {
         Instructions = uiDeveloper,
         Kernel = kernel,
-        Name = "AgnosticDetailRequirementAgent",
+        Name = "Keelan",
         Arguments = new KernelArguments(
                 new OpenAIPromptExecutionSettings()
                 {
@@ -146,7 +146,7 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
     {
         Instructions = backendDeveloper,
         Kernel = requirementAgentKernel,
-        Name = "MarketRequirementAgent",
+        Name = "Gerhard",
         Arguments = new KernelArguments(
                 new OpenAIPromptExecutionSettings()
                 {
@@ -158,17 +158,29 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
     {
         Instructions = releaseManager,
         Kernel = kernel,
-        Name = "MarketDetailRequirementAgent",
+        Name = "Rynardt",
         Arguments = new KernelArguments(
                 new OpenAIPromptExecutionSettings()
                 {
                     FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
                 })
     };
+    
+    ChatCompletionAgent CuratorManager = new()
+    {
+        Instructions = curatorAgent,
+        Kernel = kernel,
+        Name = "Curator",
+        Arguments = new KernelArguments(
+            new OpenAIPromptExecutionSettings()
+            {
+                FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
+            })
+    };
 
     AgentGroupChat chat = new(
-        projectManagerAgent,
-        businessAnalystAgent,
+        ProjectManagerAgent,
+        BusinessAnalystAgent,
         ArchitectAgent,
         UIDeveloperAgent,
         BackendDevelopmentAgent,
@@ -179,7 +191,7 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
         {
             TerminationStrategy = new ApprovalTerminationStrategy()
             {
-                Agents = [curatorAgent],
+                Agents = [CuratorManager],
                 MaximumIterations = 20
             }
         }
