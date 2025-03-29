@@ -65,42 +65,11 @@ builder.Services.AddScoped(sp =>
     var requirementAgentKernel = kernel.Clone();
     //requirementAgentKernel.CreatePluginFromType<RequirementPlugin>();
     requirementAgentKernel.Plugins.AddFromType<RequirementPlugin>();
-    string projectManager = @"You are an online gambling and casinos market expert.
-Your goal is to provide Market (Casino) information, including available markets, if it is directly required by the user or any of the other agents.
-If you have no need to answer, respond with ""I HAVE NO INPUT""";
-
-    string businessAnalyst = @"You are an expert software business analyst and you enjoy turning simple user prompts about the problems or into detailed and well structured business requirements documents.
-    You always ensure all information is structured, clear, and actionable for developers, designers, and project managers.
-    You Use concise, professional language while making the document easy to understand.
-    Where necessary, you infer missing details logically and highlight any ambiguities that require further clarification.
-
-    Use the following structure to break down the problem and explain what is required:
-
-    1. preamble
-    2. executive summary
-    3. business objectives
-    4. scope of the project
-    4.1 in-scope features
-    4.2 out of scope
-    5. stakeholders
-    6. functional requirements
-    7. delivery
-    8. non-risks & assumptions
-    8.1 risks
-    8.2 assumptions
-    9. summary
-
-    Give the brd a name and write it to a text document at C:\Documents.
-    If you have no need to answer, respond with ""I HAVE NO INPUT""";
 
     string architect = @"You are a Business Analyst who only focusses on agnostic detailed requirements, 
 your goal is to provide agnostic detailed requirements under agnostic requirements for any market, 
 if it is directly required by the user or any of the other agents.
 If you have no need to answer, respond with ""I HAVE NO INPUT""";
-
-    string developer = @"You are a Developer focused on implementing detailed requirements for a mobile application.
-Only respond when explicitly requested by the user or another agent.  
-If you have no relevant input, respond with 'I HAVE NO INPUT'.";
 
     string releaseManager = @"You are an expert on regulations for online gambling and casinos. 
 Your goal is to provide details around regulations for a given market, if it is directly required by the user or any of the other agents.
@@ -146,21 +115,9 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
                 })
     };
 
-    ChatCompletionAgent UIDeveloperAgent = new()
+    ChatCompletionAgent DeveloperAgent = new()
     {
-        Instructions = uiDeveloper,
-        Kernel = kernel,
-        Name = "Keelan",
-        Arguments = new KernelArguments(
-                new OpenAIPromptExecutionSettings()
-                {
-                    FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
-                })
-    };
-
-    ChatCompletionAgent BackendDevelopmentAgent = new()
-    {
-        Instructions = backendDeveloper,
+        Instructions = developer,
         Kernel = requirementAgentKernel,
         Name = "Gerhard",
         Arguments = new KernelArguments(
@@ -181,20 +138,8 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
                     FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
                 })
     };
-    
-    ChatCompletionAgent CuratorManager = new()
-    {
-        Instructions = curatorAgent,
-        Kernel = kernel,
-        Name = "Curator",
-        Arguments = new KernelArguments(
-            new OpenAIPromptExecutionSettings()
-            {
-                FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
-            })
-    };
 
-    ChatCompletionAgent curatorAgent = new()
+    ChatCompletionAgent CuratorAgent = new()
     {
         Instructions = @"You are a curator agent.",
         Kernel = kernel,
@@ -210,8 +155,7 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
         ProjectManagerAgent,
         BusinessAnalystAgent,
         ArchitectAgent,
-        UIDeveloperAgent,
-        BackendDevelopmentAgent,
+        DeveloperAgent,
         ReleaseManagerAgent
         )
     {
@@ -219,7 +163,7 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
         {
             TerminationStrategy = new ApprovalTerminationStrategy()
             {
-                Agents = [CuratorManager],
+                Agents = [CuratorAgent],
                 MaximumIterations = 20
             }
         }
