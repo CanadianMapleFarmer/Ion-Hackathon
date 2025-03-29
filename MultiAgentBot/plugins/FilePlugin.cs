@@ -38,7 +38,7 @@ public class FilePlugin
     /// <param name="filePath">The full path where the file should be created.</param>
     [KernelFunction("CreateFile")]
     [Description("Creates a file, takes in a file path")]
-    [return: Description("A list of markets")]
+    // [return: Description("A list of markets")]
     public static void CreateFile(string filePath)
     {
         try
@@ -62,7 +62,7 @@ public class FilePlugin
         string? directory = Path.GetDirectoryName(filePath);
         if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
         {
-            Directory.CreateDirectory($"App{Path.DirectorySeparatorChar}" + directory);
+            Directory.CreateDirectory(directory);
         }
     }
 }

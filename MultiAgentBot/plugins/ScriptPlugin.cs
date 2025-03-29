@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Management.Automation;
 using System.Text;
+using Microsoft.SemanticKernel;
 
 namespace MultiAgentBot.Plugins
 {
@@ -13,6 +15,8 @@ namespace MultiAgentBot.Plugins
         /// <param name="scriptFilePath">Full path to the PowerShell script file (.ps1)</param>
         /// <param name="targetDirectory">Directory from which the script will execute</param>
         /// <returns>Output from script execution</returns>
+        [KernelFunction("ExecuteScriptFromFile")]
+        [Description("Executes a PowerShell script from a file")]
         public string ExecuteScriptFromFile(string scriptFilePath, string targetDirectory)
         {
             if (!File.Exists(scriptFilePath))
