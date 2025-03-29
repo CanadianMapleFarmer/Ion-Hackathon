@@ -127,17 +127,16 @@ export function Chat() {
 							<div
 								className={`max-w-md p-4 rounded-xl shadow ${
 									msg.type === "user" ? "bg-sky-400" : "bg-gray-700"
-								}`}
+									}`}
+								style={{
+									wordWrap: "break-word", // Ensure long words wrap
+									overflowWrap: "break-word", // Handle overflow for long words
+									maxWidth: "100%", // Constrain the bubble width
+								}}
 							>
 								{msg.type === "api" ? (
 									<>
 										<ReactMarkdown>{msg.content}</ReactMarkdown> {/* Render Markdown for API responses */}
-										<button
-											onClick={() => window.location.href = 'file:///c://AskIan'}
-											className="mt-2 bg-sky-500 hover:bg-sky-700 text-white font-bold py-1 px-3 rounded"
-										>
-											View Solution
-										</button>
 									</>
 								) : (
 									msg.content
