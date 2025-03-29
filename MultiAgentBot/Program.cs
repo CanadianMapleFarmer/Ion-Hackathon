@@ -58,6 +58,7 @@ builder.Services.AddSingleton(sp =>
 builder.Services.AddScoped(sp =>
 {
     var kernel = sp.GetRequiredService<Kernel>();
+    kernel.Plugins.AddFromType<FilePlugin>();
     var marketAgentKernel = kernel.Clone();
     //marketAgentKernel.CreatePluginFromType<MarketPlugin>();
     marketAgentKernel.Plugins.AddFromType<MarketPlugin>();
@@ -88,6 +89,8 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
     8.1 risks
     8.2 assumptions
     9. summary
+
+    Give the brd a name and write it to a text document at C:\Documents.
     If you have no need to answer, respond with ""I HAVE NO INPUT""";
 
     string architect = @"You are a Business Analyst who only focusses on agnostic detailed requirements, 
@@ -95,18 +98,15 @@ your goal is to provide agnostic detailed requirements under agnostic requiremen
 if it is directly required by the user or any of the other agents.
 If you have no need to answer, respond with ""I HAVE NO INPUT""";
 
-    string uiDeveloper = @"You are a UI developer who only focuses on generating code from given business requirements,
-that are supplied by the Business Analyst, and integrate with the backend developer. If you have no need to answer, respond with ""I HAVE NO INPUT""";
-
-    string backendDeveloper = @"You are a Business Analyst who only focusses on detailed requirements for a market, 
-your goal is to provide detailed requirements under requirements for a specific market, 
-if it is directly required by the user or any of the other agents.
-If you have no need to answer, respond with ""I HAVE NO INPUT""";
+    string developer = @"You are a Developer focused on implementing detailed requirements for a mobile application.
+Only respond when explicitly requested by the user or another agent.  
+If you have no relevant input, respond with 'I HAVE NO INPUT'.";
 
     string releaseManager = @"You are an expert on regulations for online gambling and casinos. 
 Your goal is to provide details around regulations for a given market, if it is directly required by the user or any of the other agents.
 If you have no need to answer, respond with ""I HAVE NO INPUT""";
-    
+
+
     string curatorAgent = @"XYZ";
 
     ChatCompletionAgent ProjectManagerAgent = new()
@@ -192,6 +192,18 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
             {
                 FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
             })
+    };
+
+    ChatCompletionAgent curatorAgent = new()
+    {
+        Instructions = @"You are a curator agent.",
+        Kernel = kernel,
+        Name = "CuratorAgent",
+        Arguments = new KernelArguments(
+                new OpenAIPromptExecutionSettings()
+                {
+                    FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
+                })
     };
 
     AgentGroupChat chat = new(
