@@ -58,6 +58,7 @@ builder.Services.AddSingleton(sp =>
 builder.Services.AddScoped(sp =>
 {
     var kernel = sp.GetRequiredService<Kernel>();
+    kernel.Plugins.AddFromType<FilePlugin>();
     var marketAgentKernel = kernel.Clone();
     //marketAgentKernel.CreatePluginFromType<MarketPlugin>();
     marketAgentKernel.Plugins.AddFromType<MarketPlugin>();
@@ -88,6 +89,8 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
     8.1 risks
     8.2 assumptions
     9. summary
+
+    Give the brd a name and write it to a text document at C:\Documents.
     If you have no need to answer, respond with ""I HAVE NO INPUT""";
 
     string architect = @"You are a Business Analyst who only focusses on agnostic detailed requirements, 
