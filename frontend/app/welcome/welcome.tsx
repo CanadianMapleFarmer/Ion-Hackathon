@@ -133,7 +133,7 @@ export function Chat() {
 									<>
 										<ReactMarkdown>{msg.content}</ReactMarkdown> {/* Render Markdown for API responses */}
 										<button
-											onClick={() => window.open('/documents/AskIan', '_blank')}
+											onClick={() => window.location.href = 'file:///c://AskIan'}
 											className="mt-2 bg-sky-500 hover:bg-sky-700 text-white font-bold py-1 px-3 rounded"
 										>
 											View Solution
