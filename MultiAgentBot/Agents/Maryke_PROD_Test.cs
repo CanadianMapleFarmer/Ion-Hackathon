@@ -1,4 +1,4 @@
-﻿#pragma warning disable SKEXP0040 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SKEXP0040 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning disable SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning disable SKEXP0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 using Microsoft.SemanticKernel;
@@ -7,7 +7,7 @@ using Microsoft.SemanticKernel.Connectors.OpenAI;
 
 namespace MultiAgentBot.Agents;
 
-public class Juandre_Test
+public class Maryke_PROD_Test
 {
     private const string _Instruction = @"
 You are the Tester responsible for validating the quality and correctness of the solution implemented by the Developer.
@@ -28,11 +28,11 @@ Only generate test code and test-related artifacts. Do not modify the implementa
 
     public ChatCompletionAgent Generate(Kernel kernel)
     {
-        ChatCompletionAgent TestAgent = new()
+        ChatCompletionAgent ProdTestAgent = new()
         {
             Instructions = _Instruction,
             Kernel = kernel,
-            Name = "Juandre",
+            Name = "Maryke",
             Arguments = new KernelArguments(
                 new OpenAIPromptExecutionSettings
                 {
@@ -40,7 +40,7 @@ Only generate test code and test-related artifacts. Do not modify the implementa
                 })
         };
 
-        return TestAgent;
+        return ProdTestAgent;
     }
 }
 
