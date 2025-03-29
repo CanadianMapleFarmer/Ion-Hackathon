@@ -60,7 +60,7 @@ public class FilePlugin
         string? directory = Path.GetDirectoryName(filePath);
         if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
         {
-            Directory.CreateDirectory(directory);
+            Directory.CreateDirectory($"App{Path.DirectorySeparatorChar}" + directory);
         }
     }
 }
