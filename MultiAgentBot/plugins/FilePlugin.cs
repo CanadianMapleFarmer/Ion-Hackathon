@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using Microsoft.SemanticKernel;
 
-public static class FilePlugin
+public class FilePlugin
 {
 
     /// <summary>
