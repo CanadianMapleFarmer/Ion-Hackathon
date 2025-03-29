@@ -75,13 +75,15 @@ builder.Services.AddScoped(sp =>
     var architectAgent = new Ian_ARCH().Generate(kernel);
     var curatorAgent = new Curator().Generate(kernel);
     var releaseManagerAgent = new ReleaseManager().Generate(kernel);
+    var testAgent = new Juandre_Test().Generate(kernel);
 
     AgentGroupChat chat = new(
         projectManagerAgent,
         businessAnalystAgent,
         architectAgent,
         developerAgent,
-        releaseManagerAgent
+        releaseManagerAgent,
+        testAgent
         )
     {
         ExecutionSettings = new()
