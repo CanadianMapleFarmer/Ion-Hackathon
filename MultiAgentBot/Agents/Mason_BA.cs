@@ -32,9 +32,9 @@ namespace MultiAgentBot.Agents
     9. summary
 
     Give the brd a name and write it to a text document at C:\Documents.
-    If you have no need to answer, respond with ""I HAVE NO INPUT""";;
+    If you have no need to answer, respond with ""I HAVE NO INPUT""";
 
-        public ChatCompletionAgent GenerateBusinessAnalyst(Kernel kernel)
+        public ChatCompletionAgent Generate(Kernel kernel)
         {
             ChatCompletionAgent BusinessAnalystAgent = new()
             {

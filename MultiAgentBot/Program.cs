@@ -1,11 +1,20 @@
+using System;
 using Azure.AI.OpenAI;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using MultiAgentBot.classes;
-using MultiAgentBot.plugins;
+using MultiAgentBot.Plugins;
 using OpenAI;
 using System.ClientModel;
+using System.Net.Http;
+using System.Threading;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using MultiAgentBot.Agents;
+
 #pragma warning disable SKEXP0040 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning disable SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning disable SKEXP0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
@@ -59,111 +68,27 @@ builder.Services.AddScoped(sp =>
 {
     var kernel = sp.GetRequiredService<Kernel>();
     kernel.Plugins.AddFromType<FilePlugin>();
-    var marketAgentKernel = kernel.Clone();
-    //marketAgentKernel.CreatePluginFromType<MarketPlugin>();
-    marketAgentKernel.Plugins.AddFromType<MarketPlugin>();
-    var requirementAgentKernel = kernel.Clone();
-    //requirementAgentKernel.CreatePluginFromType<RequirementPlugin>();
-    requirementAgentKernel.Plugins.AddFromType<RequirementPlugin>();
-
-    string architect = @"You are a Business Analyst who only focusses on agnostic detailed requirements, 
-your goal is to provide agnostic detailed requirements under agnostic requirements for any market, 
-if it is directly required by the user or any of the other agents.
-If you have no need to answer, respond with ""I HAVE NO INPUT""";
-
-    string releaseManager = @"You are an expert on regulations for online gambling and casinos. 
-Your goal is to provide details around regulations for a given market, if it is directly required by the user or any of the other agents.
-If you have no need to answer, respond with ""I HAVE NO INPUT""";
-
-
-    string curatorAgent = @"XYZ";
-
-    ChatCompletionAgent ProjectManagerAgent = new()
-    {
-        Instructions = projectManager,
-        Kernel = marketAgentKernel,
-        Name = "Herman",
-        Arguments = new KernelArguments(
-                new OpenAIPromptExecutionSettings()
-                {
-                    FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
-                })
-    };
-
-
-    ChatCompletionAgent BusinessAnalystAgent = new()
-    {
-        Instructions = businessAnalyst,
-        Kernel = kernel,
-        Name = "Mason",
-        Arguments = new KernelArguments(
-                new OpenAIPromptExecutionSettings()
-                {
-                    FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
-                })
-    };
-
-    ChatCompletionAgent ArchitectAgent = new()
-    {
-        Instructions = architect,
-        Kernel = kernel,
-        Name = "Ian",
-        Arguments = new KernelArguments(
-                new OpenAIPromptExecutionSettings()
-                {
-                    FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
-                })
-    };
-
-    ChatCompletionAgent DeveloperAgent = new()
-    {
-        Instructions = developer,
-        Kernel = requirementAgentKernel,
-        Name = "Gerhard",
-        Arguments = new KernelArguments(
-                new OpenAIPromptExecutionSettings()
-                {
-                    FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
-                })
-    };
-
-    ChatCompletionAgent ReleaseManagerAgent = new()
-    {
-        Instructions = releaseManager,
-        Kernel = kernel,
-        Name = "Rynardt",
-        Arguments = new KernelArguments(
-                new OpenAIPromptExecutionSettings()
-                {
-                    FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
-                })
-    };
-
-    ChatCompletionAgent CuratorAgent = new()
-    {
-        Instructions = @"You are a curator agent.",
-        Kernel = kernel,
-        Name = "CuratorAgent",
-        Arguments = new KernelArguments(
-                new OpenAIPromptExecutionSettings()
-                {
-                    FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
-                })
-    };
+    
+    var projectManagerAgent = new Herman_PM().Generate(kernel);
+    var businessAnalystAgent = new Mason_BA().Generate(kernel);
+    var developerAgent = new Kloppers_DEV().Generate(kernel);
+    var architectAgent = new Ian_ARCH().Generate(kernel);
+    var curatorAgent = new Curator().Generate(kernel);
+    var releaseManagerAgent = new ReleaseManager().Generate(kernel);
 
     AgentGroupChat chat = new(
-        ProjectManagerAgent,
-        BusinessAnalystAgent,
-        ArchitectAgent,
-        DeveloperAgent,
-        ReleaseManagerAgent
+        projectManagerAgent,
+        businessAnalystAgent,
+        architectAgent,
+        developerAgent,
+        releaseManagerAgent
         )
     {
         ExecutionSettings = new()
         {
             TerminationStrategy = new ApprovalTerminationStrategy()
             {
-                Agents = [CuratorAgent],
+                Agents = [curatorAgent],
                 MaximumIterations = 20
             }
         }

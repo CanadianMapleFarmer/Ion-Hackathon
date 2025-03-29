@@ -14,7 +14,7 @@ public class Herman_PM
 Your goal is to provide Market (Casino) information, including available markets, if it is directly required by the user or any of the other agents.
 If you have no need to answer, respond with ""I HAVE NO INPUT""";
 
-    public ChatCompletionAgent GenerateProjectManager(Kernel kernel)
+    public ChatCompletionAgent Generate(Kernel kernel)
     {
         ChatCompletionAgent ProjectManagerAgent = new()
         {

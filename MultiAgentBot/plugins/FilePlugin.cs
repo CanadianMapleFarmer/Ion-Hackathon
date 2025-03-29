@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.IO;
 using Microsoft.SemanticKernel;
 
+namespace MultiAgentBot.Plugins;
+
 public class FilePlugin
 {
 

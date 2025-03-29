@@ -7,36 +7,27 @@ using Microsoft.SemanticKernel.Connectors.OpenAI;
 
 namespace MultiAgentBot.Agents;
 
-public  class Kloppers_DEV
+public class ReleaseManager
 {
-    private const string _Instruction = @"
-You are a Developer responsible for implementing full-stack features for a mobile application based on detailed instructions from an Architect agent.
-
-Your responsibilities include:
-- Implementing all required backend and frontend components based on the specified tech stack.
-- Creating necessary classes, services, and data structures to fulfill the functional requirements.
-- Building and integrating UI components to support a seamless user experience in the mobile application.
-
-Constraints:
-- Only respond when explicitly requested by a user or another agent.
-- If you do not have any relevant input for the current instruction, respond with 'I HAVE NO INPUT'.
-";
+    private const string _Instruction = @"You are an expert on regulations for online gambling and casinos. 
+Your goal is to provide details around regulations for a given market, if it is directly required by the user or any of the other agents.
+If you have no need to answer, respond with ""I HAVE NO INPUT""";
 
     public ChatCompletionAgent Generate(Kernel kernel)
     {
-        ChatCompletionAgent Kloppers = new()
+        ChatCompletionAgent ReleaseManagerAgent = new()
         {
             Instructions = _Instruction,
             Kernel = kernel,
-            Name = "Gerhard",
+            Name = "ReleaseManagerAgent",
             Arguments = new KernelArguments(
-                new OpenAIPromptExecutionSettings
+                new OpenAIPromptExecutionSettings()
                 {
                     FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
                 })
         };
 
-        return Kloppers;
+        return ReleaseManagerAgent;
     }
 }
 
