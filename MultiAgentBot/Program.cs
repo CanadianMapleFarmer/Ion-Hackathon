@@ -95,9 +95,7 @@ your goal is to provide agnostic detailed requirements under agnostic requiremen
 if it is directly required by the user or any of the other agents.
 If you have no need to answer, respond with ""I HAVE NO INPUT""";
 
-    string developer = @"You are a Developer focused on implementing detailed requirements for a mobile application.
-Only respond when explicitly requested by the user or another agent.  
-If you have no relevant input, respond with 'I HAVE NO INPUT'.";
+    string developer = 
 
     string releaseManager = @"You are an expert on regulations for online gambling and casinos. 
 Your goal is to provide details around regulations for a given market, if it is directly required by the user or any of the other agents.
@@ -143,21 +141,9 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
                 })
     };
 
-    ChatCompletionAgent UIDeveloperAgent = new()
+    ChatCompletionAgent DeveloperAgent = new()
     {
-        Instructions = uiDeveloper,
-        Kernel = kernel,
-        Name = "Keelan",
-        Arguments = new KernelArguments(
-                new OpenAIPromptExecutionSettings()
-                {
-                    FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
-                })
-    };
-
-    ChatCompletionAgent BackendDevelopmentAgent = new()
-    {
-        Instructions = backendDeveloper,
+        Instructions = developer,
         Kernel = requirementAgentKernel,
         Name = "Gerhard",
         Arguments = new KernelArguments(
@@ -178,20 +164,8 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
                     FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
                 })
     };
-    
-    ChatCompletionAgent CuratorManager = new()
-    {
-        Instructions = curatorAgent,
-        Kernel = kernel,
-        Name = "Curator",
-        Arguments = new KernelArguments(
-            new OpenAIPromptExecutionSettings()
-            {
-                FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
-            })
-    };
 
-    ChatCompletionAgent curatorAgent = new()
+    ChatCompletionAgent CuratorAgent = new()
     {
         Instructions = @"You are a curator agent.",
         Kernel = kernel,
@@ -207,8 +181,7 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
         ProjectManagerAgent,
         BusinessAnalystAgent,
         ArchitectAgent,
-        UIDeveloperAgent,
-        BackendDevelopmentAgent,
+        DeveloperAgent,
         ReleaseManagerAgent
         )
     {
@@ -216,7 +189,7 @@ If you have no need to answer, respond with ""I HAVE NO INPUT""";
         {
             TerminationStrategy = new ApprovalTerminationStrategy()
             {
-                Agents = [CuratorManager],
+                Agents = [CuratorAgent],
                 MaximumIterations = 20
             }
         }

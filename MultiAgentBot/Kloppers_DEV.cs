@@ -1,9 +1,14 @@
+#pragma warning disable SKEXP0040 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SKEXP0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
 using OpenAI.Chat;
 
 namespace MultiAgentBot;
 
-public  class Gerhard_DEV
+public  class Kloppers_DEV
 {
     private const string _Instruction = @"
 You are a Developer responsible for implementing full-stack features for a mobile application based on detailed instructions from an Architect agent.
@@ -18,12 +23,26 @@ Constraints:
 - If you do not have any relevant input for the current instruction, respond with 'I HAVE NO INPUT'.
 ";
     
-    public ChatCompletionAgent Kloppers = new()
-    {
-        
-    }
     public async Task GenerateAppCode(string architectPrompt)
     {
-        
+#pragma warning disable SKEXP0110
+        ChatCompletionAgent Kloppers = new()
+#pragma warning restore SKEXP0110
+        {
+            Instructions = _Instruction,
+            Kernel = requirementAgentKernel,
+            Name = "Gerhard",
+            Arguments = new KernelArguments(
+                new OpenAIPromptExecutionSettings()
+                {
+                    FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
+                })
+        };
+
+        return Kloppers;
     }
 }
+
+#pragma warning restore SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SKEXP0040 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SKEXP0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
