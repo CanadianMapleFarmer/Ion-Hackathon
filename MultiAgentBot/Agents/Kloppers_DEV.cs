@@ -4,9 +4,8 @@
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
-using OpenAI.Chat;
 
-namespace MultiAgentBot;
+namespace MultiAgentBot.Agents;
 
 public  class Kloppers_DEV
 {
@@ -23,22 +22,20 @@ Constraints:
 - If you do not have any relevant input for the current instruction, respond with 'I HAVE NO INPUT'.
 ";
     
-    public async Task GenerateAppCode(string architectPrompt)
+    public async Task<ChatCompletionAgent> GenerateDeveloper(Kernel kernel)
     {
-#pragma warning disable SKEXP0110
         ChatCompletionAgent Kloppers = new()
-#pragma warning restore SKEXP0110
         {
             Instructions = _Instruction,
-            Kernel = requirementAgentKernel,
+            Kernel = kernel,
             Name = "Gerhard",
             Arguments = new KernelArguments(
-                new OpenAIPromptExecutionSettings()
+                new OpenAIPromptExecutionSettings
                 {
                     FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
                 })
         };
-
+        
         return Kloppers;
     }
 }
