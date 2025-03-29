@@ -1,3 +1,4 @@
+﻿
 #pragma warning disable SKEXP0040 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning disable SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning disable SKEXP0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
@@ -7,36 +8,27 @@ using Microsoft.SemanticKernel.Connectors.OpenAI;
 
 namespace MultiAgentBot.Agents;
 
-public  class Kloppers_DEV
+public class Herman_PM
 {
-    private const string _Instruction = @"
-You are a Developer responsible for implementing full-stack features for a mobile application based on detailed instructions from an Architect agent.
+    private const string _Instruction = @"You are an online gambling and casinos market expert.
+Your goal is to provide Market (Casino) information, including available markets, if it is directly required by the user or any of the other agents.
+If you have no need to answer, respond with ""I HAVE NO INPUT""";
 
-Your responsibilities include:
-- Implementing all required backend and frontend components based on the specified tech stack.
-- Creating necessary classes, services, and data structures to fulfill the functional requirements.
-- Building and integrating UI components to support a seamless user experience in the mobile application.
-
-Constraints:
-- Only respond when explicitly requested by a user or another agent.
-- If you do not have any relevant input for the current instruction, respond with 'I HAVE NO INPUT'.
-";
-
-    public ChatCompletionAgent GenerateDeveloper(Kernel kernel)
+    public ChatCompletionAgent GenerateProjectManager(Kernel kernel)
     {
-        ChatCompletionAgent Kloppers = new()
+        ChatCompletionAgent ProjectManagerAgent = new()
         {
             Instructions = _Instruction,
             Kernel = kernel,
-            Name = "Gerhard",
+            Name = "Herman",
             Arguments = new KernelArguments(
-                new OpenAIPromptExecutionSettings
-                {
-                    FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
-                })
+             new OpenAIPromptExecutionSettings()
+             {
+                 FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
+             })
         };
 
-        return Kloppers;
+        return ProjectManagerAgent;
     }
 }
 
