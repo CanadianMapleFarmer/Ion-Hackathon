@@ -25,7 +25,7 @@ You do not write code directly, but you must describe the full solution in suffi
  
 Ensure that your instructions align with best practices for modularity, maintainability, and performance.
 
-- If you do not have any relevant input for the current instruction, respond with 'I HAVE NO INPUT'.
+- If you do not have any relevant input for the current instruction, respond with 'NOTHING FROM MY SIDE'.
 ";
 
     public ChatCompletionAgent Generate(Kernel kernel)

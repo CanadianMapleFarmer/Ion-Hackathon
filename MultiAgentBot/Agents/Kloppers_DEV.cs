@@ -19,7 +19,9 @@ Your responsibilities include:
 
 Constraints:
 - Only respond when explicitly requested by a user or another agent.
-- If you do not have any relevant input for the current instruction, respond with 'I HAVE NO INPUT'.
+- If you do not have any relevant input for the current instruction, respond with 'NOTHING FROM MY SIDE'.
+
+\Documents\AskIan is the directory where you should store your implementation code and artifacts.
 ";
 
     public ChatCompletionAgent Generate(Kernel kernel)

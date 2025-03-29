@@ -31,8 +31,8 @@ namespace MultiAgentBot.Agents
     8.2 assumptions
     9. summary
 
-    Give the brd a name and write it to a text document at \Documents.
-    If you have no need to answer, respond with ""I HAVE NO INPUT""";
+    Give the brd a name and write it to a text document at \Documents\AskIan.
+    If you have no need to answer, respond with ""NOTHING FROM MY SIDE""";
 
         public ChatCompletionAgent Generate(Kernel kernel)
         {
