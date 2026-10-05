@@ -77,7 +77,7 @@ builder.Services.AddSingleton(sp =>
 builder.Services.AddScoped(sp =>
 {
     var kernel = sp.GetRequiredService<Kernel>();
-    kernel.Plugins.AddFromType<FilePlugin>();
+    if (!kernel.Plugins.Select(x => x.Name).Contains(nameof(FilePlugin))){    kernel.Plugins.AddFromType<FilePlugin>();}
 
     var testKernal = kernel.Clone();
     testKernal.Plugins.AddFromType<ScriptPlugin>();
@@ -89,7 +89,7 @@ builder.Services.AddScoped(sp =>
     var curatorAgent = new Curator().Generate(kernel);
     var releaseManagerAgent = new ReleaseManager().Generate(kernel);
     var testAgent = new Juandre_Test().Generate(kernel);
-    var prodTestAgent = new Maryke_PROD_Test().Generate(testKernal);
+    // var prodTestAgent = new Maryke_PROD_Test().Generate(testKernal);
 
     AgentGroupChat chat = new(
         projectManagerAgent,
@@ -97,8 +97,8 @@ builder.Services.AddScoped(sp =>
         architectAgent,
         developerAgent,
         releaseManagerAgent,
-        testAgent,
-        prodTestAgent
+        testAgent
+        // prodTestAgent
         )
     {
         ExecutionSettings = new()
